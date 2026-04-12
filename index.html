@@ -599,87 +599,84 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
     var track = document.getElementById('carousel-track');
     var dotsEl = document.getElementById('carousel-dots');
     var n = photos.length;
-    var cur = 0; // index reálnej fotky (0 až n-1)
     var auto;
+    // pos = pozícia v rozšírenom poli: 0=klon_poslednej, 1..n=reálne, n+1=klon_prvej
+    var pos = 1;
 
-    // Vytvoríme slidy: klon poslednej + všetky + klon prvej
-    var all = [photos[n-1]].concat(photos).concat([photos[0]]);
-    all.forEach(function(src){
+    // Slidy: [klon_poslednej, foto1..fotoN, klon_prvej]
+    [photos[n-1]].concat(photos).concat([photos[0]]).forEach(function(src){
       var div = document.createElement('div');
       div.style.cssText = 'flex:0 0 100%;min-width:100%;position:relative;height:500px;overflow:hidden;';
       var bg = document.createElement('div');
       bg.style.cssText = 'position:absolute;inset:0;background-image:url('+src+');background-size:cover;background-position:center;filter:blur(20px) brightness(.5);transform:scale(1.15);';
       var img = document.createElement('img');
       img.src = src;
-      img.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;max-width:100%;max-height:100%;width:auto;height:100%;object-fit:cover;display:block;';
+      img.style.cssText = 'position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;width:auto;height:100%;max-width:100%;object-fit:cover;display:block;';
       div.appendChild(bg);
       div.appendChild(img);
       track.appendChild(div);
     });
 
-    // Bodky — len pre reálne fotky
+    // Bodky len pre reálne fotky
     photos.forEach(function(_, i){
       var d = document.createElement('span');
       d.style.cssText = 'display:inline-block;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;margin:0 3px;';
-      d.addEventListener('click', function(){ go(i); });
+      d.addEventListener('click', function(){ goTo(i+1); });
       dotsEl.appendChild(d);
     });
 
-    function dot(){
+    function updateDots(){
+      var realIdx = pos - 1;
       var ds = dotsEl.children;
       for(var i=0;i<ds.length;i++){
-        ds[i].style.background = i===cur ? 'var(--gold)' : 'rgba(255,255,255,.4)';
-        ds[i].style.transform  = i===cur ? 'scale(1.4)' : 'scale(1)';
+        ds[i].style.background = i===realIdx ? 'var(--gold)' : 'rgba(255,255,255,.4)';
+        ds[i].style.transform  = i===realIdx ? 'scale(1.4)' : 'scale(1)';
       }
     }
 
-    // Nastav pozíciu bez animácie alebo s animáciou
-    function slide(idx, anim){
+    function moveTo(p, anim){
       track.style.transition = anim ? 'transform .55s cubic-bezier(.4,0,.2,1)' : 'none';
-      track.style.transform  = 'translateX(-'+(idx+1)*100+'%)';
+      track.style.transform  = 'translateX(-'+(p*100)+'%)';
     }
 
-    function go(idx){
-      cur = ((idx % n) + n) % n;
-      slide(cur, true);
-      dot();
-      restart();
+    function goTo(p){
+      pos = p;
+      moveTo(pos, true);
+      updateDots();
+      resetAuto();
     }
 
-    window.carouselMove = function(d){ go(cur + d); };
-
-    // Po skončení animácie — neviditeľný skok ak sme na klone
+    // Po animácii — skok z klonu na reálnu pozíciu bez animácie
     track.addEventListener('transitionend', function(){
-      if(cur === 0 && track.style.transform === 'translateX(-'+( 1)*100+'%)'){
-        // sme na pozícii 1 (prvá reálna) — ok
-      }
-      // klon prvej (pozícia n+1) → skok na pozíciu 1
-      var current_x = parseFloat(track.style.transform.replace('translateX(-','').replace('%)',''));
-      if(current_x === (n+1)*100){
-        slide(0, false);
-      }
-      // klon poslednej (pozícia 0) → skok na pozíciu n
-      if(current_x === 0){
-        slide(n-1, false);
+      if(pos === n+1){
+        // klon prvej → reálna prvá
+        pos = 1;
+        moveTo(pos, false);
+        updateDots();
+      } else if(pos === 0){
+        // klon poslednej → reálna posledná
+        pos = n;
+        moveTo(pos, false);
+        updateDots();
       }
     });
 
-    function restart(){
+    window.carouselMove = function(dir){ goTo(pos + dir); };
+
+    function resetAuto(){
       clearInterval(auto);
-      auto = setInterval(function(){ go(cur+1); }, 4000);
+      auto = setInterval(function(){ goTo(pos+1); }, 4000);
     }
 
-    // Init
-    slide(cur, false);
-    dot();
-    restart();
+    moveTo(pos, false);
+    updateDots();
+    resetAuto();
 
-    // Swipe
     var sx=0;
     track.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;},{passive:true});
     track.addEventListener('touchend',function(e){
       var dx=e.changedTouches[0].clientX-sx;
-      if(Math.abs(dx)>40) go(cur+(dx<0?1:-1));
+      if(Math.abs(dx)>40) goTo(pos+(dx<0?1:-1));
     },{passive:true});
   })();
   </script>
