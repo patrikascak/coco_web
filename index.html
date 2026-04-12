@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>COCO Company — Coffee · Cocktails · Catering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@1,400;1,500;1,600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --teal:#3a7a78;
+  --teal-dark:#2f6b6a;
+  --teal-light:#8ab5b3;
+  --cream:#f4efe3;
+  --cream-dark:#e8e1d2;
+  --ink:#0f0f0f;
+  --ink2:#181818;
+  --ink3:#222;
+  --gold:#c8a15a;
+  --gold-light:#dfc08a;
+}
+html{scroll-behavior:smooth;overflow-x:hidden;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--ink);color:var(--cream);overflow-x:hidden;}
+
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:9999;
+  height:64px;
+  display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;
+  padding:0 4rem;
+  background:rgba(15,15,15,0.97);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(200,161,90,0.3);
+  box-sizing:border-box;
+}
+.nav-logo{display:flex;flex-direction:row;align-items:center;gap:12px;text-decoration:none;flex-shrink:0;margin-right:auto;}
+.nav-logo svg{width:36px;height:36px;display:block;}
+.nav-wordmark{display:flex;flex-direction:column;line-height:1;align-items:flex-start;}
+.nav-wordmark b{display:block;font-size:18px;font-weight:700;letter-spacing:6px;color:var(--cream);}
+.nav-wordmark small{display:block;font-size:8px;font-weight:600;letter-spacing:4.5px;color:var(--gold);margin-top:4px;}
+.nav-links{display:flex;flex-direction:row;flex-wrap:nowrap;align-items:center;gap:2rem;list-style:none;padding:0;margin:0 2rem 0 0;flex-shrink:0;}
+.nav-links li{display:block;padding:0;margin:0;}
+.nav-links a{display:block;text-decoration:none;white-space:nowrap;font-size:13px;font-weight:600;letter-spacing:1.5px;color:rgba(244,239,227,.85);text-transform:uppercase;border-bottom:1px solid transparent;padding-bottom:2px;transition:all .2s;}
+.nav-links a:hover{color:var(--gold);border-bottom-color:rgba(200,161,90,.5);}
+.nav-links a.active{color:var(--gold);border-bottom-color:var(--gold);}
+.nav-cta{display:block;flex-shrink:0;background:var(--gold);color:var(--ink);border:none;padding:11px 22px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-decoration:none;border-radius:2px;transition:background .2s;white-space:nowrap;line-height:1;}
+.nav-cta:hover{background:var(--gold-light);}
+.hamburger{display:none;flex-shrink:0;background:none;border:1px solid rgba(200,161,90,.4);color:var(--cream);padding:8px 12px;cursor:pointer;font-size:16px;line-height:1;}
+
+#infobar{
+  position:static;
+  margin-top:64px;
+  background:rgba(15,15,15,0.97);
+  display:flex;align-items:center;justify-content:center;gap:.8rem;flex-wrap:nowrap;
+  padding:8px 2rem;
+  font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);
+  border-bottom:1px solid rgba(200,161,90,.3);
+  white-space:nowrap;
+}
+.infobar-pulse{display:inline-block;width:5px;height:5px;min-width:5px;min-height:5px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;vertical-align:middle;}
+.infobar-mobile{display:none;}
+@media(max-width:960px){
+  #infobar{margin-top:58px;font-size:8px;letter-spacing:1.5px;padding:5px 1rem;gap:.5rem;flex-wrap:wrap;white-space:normal;}
+  .infobar-desktop{display:none;}
+  .infobar-mobile{display:inline;}
+}
+
+#hero{min-height:calc(100vh - 96px);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 5rem;padding-top:4rem;position:relative;overflow:hidden;background:var(--ink);}
+#hero::after{display:none;}
+.hero-left{padding-right:3rem;z-index:1;}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;padding:7px 14px;border:1px solid rgba(200,161,90,.25);border-radius:2px;}
+.hero-pill::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+h1.hero-h1{font-size:clamp(3.8rem,6.5vw,7.5rem);font-weight:700;letter-spacing:-3px;line-height:.88;color:var(--cream);}
+h1.hero-h1 span{color:var(--teal-light);}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;color:var(--gold);margin:1.6rem 0 1rem;opacity:.9;}
+.hero-desc{font-size:17px;font-weight:300;line-height:1.9;color:rgba(244,239,227,.65);max-width:440px;margin-bottom:2.2rem;}
+.hero-services{display:flex;gap:1.5rem;margin-bottom:2.5rem;}
+.htag{font-size:13px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--teal-light);display:flex;align-items:center;gap:7px;}
+.htag::before{content:'';width:18px;height:1px;background:var(--teal-light);}
+.cta-row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:14px 30px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;border-radius:2px;transition:all .2s;}
+.btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(244,239,227,.2);padding:14px 30px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;border-radius:2px;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--teal-light);color:var(--teal-light);transform:translateY(-2px);}
+.hero-right{display:flex;justify-content:center;align-items:center;z-index:1;position:relative;}
+.hero-glow{position:absolute;width:580px;height:580px;background:radial-gradient(circle,rgba(58,122,120,.38) 0%,rgba(58,122,120,.14) 40%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;}
+.symbol-wrap{position:relative;width:340px;height:340px;z-index:1;}
+.symbol-wrap svg.sym{width:100%;height:100%;transform-origin:center center;will-change:transform;}
+.orbit{position:absolute;inset:-28px;border:1px solid rgba(200,161,90,.18);border-radius:50%;animation:spin 28s linear infinite;}
+.orbit-dot{position:absolute;top:-5px;left:50%;width:10px;height:10px;background:var(--gold);border-radius:50%;margin-left:-5px;box-shadow:0 0 12px rgba(200,161,90,.6);}
+@keyframes spin{to{transform:rotate(360deg);}}
+.scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(244,239,227,.25);}
+.scroll-cue::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,rgba(200,161,90,.45),transparent);animation:grow 2.2s ease-in-out infinite;}
+@keyframes grow{0%,100%{opacity:.3;}50%{opacity:.9;}}
+
+.gold-divider{display:block;width:100%;height:4px;background:#c8a15a;position:relative;z-index:10;}
+
+section{padding:7rem 5rem;}
+.s-label{font-size:12px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:.9rem;display:flex;align-items:center;gap:10px;}
+.s-label::before{content:'';width:28px;height:1px;background:var(--gold);}
+.s-h2{font-size:clamp(2.2rem,3.8vw,3.4rem);font-weight:700;letter-spacing:-1px;line-height:1;color:var(--cream);margin-bottom:1.4rem;}
+.s-h2 em{font-style:normal;color:var(--teal-light);}
+.s-sub{font-size:17px;font-weight:300;line-height:1.85;color:rgba(244,239,227,.55);}
+
+#sluzby{background:var(--ink);}
+.srv-head{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:end;margin-bottom:4rem;}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.srv-card{background:var(--ink2);padding:2.5rem 2rem;position:relative;overflow:hidden;transition:transform .25s, background .25s;cursor:default;border-radius:12px;}
+.srv-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;border-radius:0 0 12px 12px;}
+.srv-card:hover::after{transform:scaleX(1);}
+.srv-card:hover{transform:scale(1.02);background:#1d1d1d;z-index:2;}
+.srv-card--teal{background:var(--teal);border-radius:12px;}
+.srv-card--teal:hover::after{transform:scaleX(1);}
+.srv-card--teal:hover{background:#3f8583;transform:scale(1.02);z-index:2;}
+.srv-ico{margin-bottom:1.4rem;}
+.srv-ico svg{width:38px;height:38px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.srv-tag{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+.srv-name{font-size:22px;font-weight:700;color:var(--cream);letter-spacing:-.3px;margin-bottom:1rem;}
+.srv-desc{font-size:15px;font-weight:300;line-height:1.85;color:rgba(244,239,227,.55);min-height:11rem;}
+.srv-list{list-style:none;margin-top:1.3rem;display:flex;flex-direction:column;gap:7px;}
+.srv-list li{font-size:14px;font-weight:400;color:rgba(244,239,227,.5);padding-left:.9rem;position:relative;}
+.srv-list li::before{content:'—';position:absolute;left:0;color:var(--teal-light);}
+
+.pkg-card{transition:transform .25s;}
+.pkg-card:hover{transform:scale(1.02);z-index:2;}
+.pkg-card.featured:hover{transform:scale(1.02);}
+
+.menu-row{padding:.6rem .5rem;margin:2px 0;border-radius:8px;}
+
+.m-item{transition:transform .25s;border-radius:10px;overflow:hidden;}
+.m-item:hover{transform:scale(1.02);z-index:2;}
+.ref-card{transition:transform .25s;border-radius:12px;}
+.ref-card:hover{transform:scale(1.02);z-index:2;}
+.faq-item{transition:transform .2s;border-radius:10px;overflow:hidden;}
+.faq-item:hover{transform:scale(1.01);z-index:2;}
+.barman-box{transition:transform .25s;border-radius:12px;position:relative;overflow:hidden;}
+.barman-box:hover{transform:scale(1.01);z-index:2;}
+.barman-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.barman-box:hover::after{transform:scaleX(1);}
+.fee-hoverable{padding:1rem 1.5rem;border-radius:6px;cursor:default;}
+
+#ceny{background:var(--cream);color:var(--ink);padding-top:4rem;}
+#ceny .s-label{color:var(--teal-dark);}
+#ceny .s-label::before{background:var(--teal-dark);}
+#ceny .s-h2{color:var(--ink);}
+#ceny .s-h2 em{color:var(--teal);}
+#ceny .s-sub{color:rgba(15,15,15,.45);}
+.price-note{font-size:14px;color:rgba(15,15,15,.4);margin-top:.5rem;font-style:italic;}
+.price-section-title{font-size:15px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal-dark);margin:1.4rem 0 1.2rem;display:flex;align-items:center;gap:10px;}
+.price-section-title::after{content:'';flex:1;height:1px;background:rgba(58,122,120,.2);}
+
+.pkg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:.5rem;}
+.pkg-card{background:var(--ink);padding:2rem 1.8rem;position:relative;border-radius:12px;overflow:hidden;}
+.pkg-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.pkg-card:hover::after{transform:scaleX(1);}
+.pkg-brand-note{font-size:15px;font-weight:500;color:var(--teal-dark);margin-top:1.2rem;font-style:italic;opacity:1;letter-spacing:.3px;line-height:1.7;}
+.pkg-card.featured{background:var(--teal);}
+.pkg-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;white-space:nowrap;}
+.pkg-name{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+.pkg-card.featured .pkg-name{color:var(--gold);}
+.pkg-price{font-size:2.8rem;font-weight:700;color:var(--cream);line-height:1;letter-spacing:-1px;}
+.pkg-price sup{font-size:1rem;vertical-align:top;margin-top:.5rem;letter-spacing:0;display:inline-block;transform:translateZ(0);}
+.pkg-pp{font-size:1rem;font-weight:400;color:rgba(244,239,227,.4);letter-spacing:0;vertical-align:baseline;margin-left:4px;display:inline-block;transform:translateZ(0);}
+.pkg-price-note{font-size:13px;color:var(--gold);margin:.4rem 0 1.4rem;}
+.pkg-card.featured .pkg-price-note{color:var(--gold);}
+.pkg-items{list-style:none;display:flex;flex-direction:column;gap:7px;}
+.pkg-items li{font-size:14px;font-weight:400;color:rgba(244,239,227,.6);padding-left:.9rem;position:relative;}
+.pkg-items li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-size:12px;}
+.pkg-card.featured .pkg-items li{color:rgba(244,239,227,.8);}
+.pkg-divider{height:1px;background:rgba(244,239,227,.2);margin:1.2rem 0;}
+
+.menu-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch;}
+.menu-col{background:var(--ink);padding:2rem 2rem;border-radius:12px;position:relative;overflow:hidden;transition:transform .25s;}
+.menu-col:hover{transform:scale(1.02);z-index:2;}
+.menu-col.teal{background:var(--teal);}
+.menu-col.teal:hover{background:#3f8583;}
+.menu-col.teal .menu-item-sub{color:rgba(244,239,227,.75);}
+.menu-col::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.menu-col:hover::after{transform:scaleX(1);}
+.menu-col-title{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;padding-bottom:.8rem;border-bottom:1px solid rgba(200,161,90,.15);}
+.menu-row{display:flex;justify-content:space-between;align-items:baseline;padding:.6rem 0;border-bottom:1px solid rgba(244,239,227,.04);}
+.menu-row:last-child{border-bottom:none;}
+.menu-item-name{font-size:15px;font-weight:600;color:var(--cream);}
+.menu-item-sub{font-size:13px;font-weight:400;color:rgba(244,239,227,.6);margin-top:2px;}
+.menu-item-price{font-size:15px;font-weight:700;color:var(--gold);white-space:nowrap;margin-left:1rem;flex-shrink:0;}
+
+.service-fee-box{background:var(--ink);padding:2rem;margin-top:16px;margin-bottom:16px;display:flex;gap:4rem;align-items:center;flex-wrap:wrap;border-radius:12px;position:relative;overflow:hidden;transition:transform .25s;}
+.service-fee-box:hover{transform:scale(1.01);z-index:2;}
+.service-fee-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.service-fee-box:hover::after{transform:scaleX(1);}
+.fee-item{display:flex;flex-direction:column;gap:4px;}
+.fee-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.4);}
+.fee-price{font-size:1.9rem;font-weight:700;color:var(--gold);letter-spacing:-1px;}
+.fee-note{font-size:13px;color:rgba(244,239,227,.32);}
+.fee-divider{width:1px;height:50px;background:rgba(244,239,234,.25);align-self:center;}
+.fee-hoverable{padding:1rem 1.5rem;border-radius:6px;cursor:default;}
+
+.barman-box{background:var(--ink2);border:1px solid rgba(200,161,90,.2);padding:2.5rem;margin-top:16px;display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:center;}
+.barman-box-left h3{font-size:1.4rem;font-weight:700;color:var(--cream);margin-bottom:.5rem;letter-spacing:-.3px;}
+.barman-box-left p{font-size:15px;font-weight:300;color:rgba(244,239,227,.8);line-height:1.75;}
+.barman-box-list{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:.9rem;}
+.barman-box-list li{font-size:14px;color:rgba(244,239,227,.8);padding-left:.9rem;position:relative;}
+.barman-box-list li::before{content:'—';position:absolute;left:0;color:var(--gold);}
+.barman-price-wrap{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-shrink:0;}
+.barman-price-item{display:flex;flex-direction:column;gap:4px;}
+.barman-price-divider{width:1px;height:50px;background:rgba(244,239,227,.25);align-self:center;}
+.barman-price{font-size:3rem;font-weight:700;color:var(--gold);letter-spacing:-2px;line-height:1;}
+.barman-price-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.6);margin-top:.3rem;}
+
+#faq{background:var(--cream);color:var(--ink);}
+#faq .s-label{color:var(--teal-dark);}
+#faq .s-label::before{background:var(--teal-dark);}
+#faq .s-h2{color:var(--ink);}
+#faq .s-h2 em{color:var(--teal);}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:3rem;}
+.faq-item{background:white;padding:2rem 2rem;border-radius:10px;}
+.faq-q{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:.7rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;line-height:1.35;}
+.faq-q span{color:var(--gold);font-size:1.3rem;flex-shrink:0;transition:transform .25s;margin-top:-1px;}
+.faq-a{font-size:15px;font-weight:300;line-height:1.85;color:rgba(15,15,15,.6);max-height:0;overflow:hidden;transition:max-height .35s ease,padding .25s;}
+.faq-item.open .faq-q span{transform:rotate(45deg);}
+.faq-item.open .faq-a{max-height:300px;padding-top:.5rem;}
+
+#referencie{background:var(--ink);}
+.ref-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:3rem;}
+.ref-card{background:var(--ink2);padding:2.2rem 2rem;border-radius:12px;}
+.ref-stars{color:var(--gold);font-size:15px;letter-spacing:2px;margin-bottom:1rem;}
+.ref-text{font-size:16px;font-weight:300;line-height:1.85;color:rgba(244,239,227,.65);margin-bottom:1.5rem;font-style:italic;}
+.ref-author{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--teal-light);}
+.ref-type{font-size:11px;font-weight:400;color:rgba(244,239,227,.35);margin-top:3px;}
+
+#kontakt{background:#0a0a0a;}
+.kontakt-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.kontakt-info p{font-size:17px;font-weight:300;line-height:1.85;color:rgba(244,239,227,.55);margin-bottom:2.5rem;}
+.ci-list{display:flex;flex-direction:column;gap:1.2rem;}
+.ci{display:flex;align-items:flex-start;gap:.9rem;}
+.ci-ico{width:36px;height:36px;flex-shrink:0;border:1px solid rgba(200,161,90,.3);border-radius:2px;display:flex;align-items:center;justify-content:center;}
+.ci-ico svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;}
+.ci-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;}
+.ci-val{font-size:16px;font-weight:300;color:rgba(244,239,227,.8);}
+.contact-form{display:flex;flex-direction:column;gap:.9rem;}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.f-group{display:flex;flex-direction:column;gap:6px;}
+.f-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.4);}
+.f-input{background:#181818;border:1px solid rgba(244,239,227,.08);color:var(--cream);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:300;padding:13px 16px;border-radius:2px;outline:none;transition:border-color .2s;width:100%;}
+.f-input:focus{border-color:rgba(200,161,90,.5);}
+.f-input::placeholder{color:rgba(244,239,227,.2);}
+textarea.f-input{resize:vertical;min-height:110px;}
+.f-submit{margin-top:.3rem;align-self:flex-start;background:var(--gold);color:var(--ink);border:none;padding:15px 36px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border-radius:2px;transition:all .2s;}
+.f-submit:hover{background:var(--gold-light);transform:translateY(-2px);}
+
+footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(200,161,90,.12);}
+.f-copy{font-size:13px;font-weight:300;color:rgba(244,239,227,.3);letter-spacing:.5px;}
+.f-copy span{color:var(--gold);}
+.f-nav{display:flex;gap:2rem;}
+.f-nav a{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.3);text-decoration:none;transition:color .2s;}
+.f-nav a:hover{color:var(--gold);}
+
+@media(max-width:1100px) and (min-width:961px){
+  #hero{grid-template-columns:1fr 1fr;padding:0 2.5rem;padding-top:80px;}
+  .symbol-wrap{width:240px;height:240px;}
+  .hero-glow{width:360px;height:360px;}
+}
+@media(max-width:960px){
+  #navbar{padding:0 2rem;height:58px;}
+  .nav-links{display:none;}
+  .nav-cta{display:none;}
+  .nav-links.open{display:flex;position:absolute;top:58px;left:0;right:0;flex-direction:column;background:rgba(10,10,10,.99);padding:1.5rem 2rem;gap:1rem;border-bottom:1px solid rgba(200,161,90,.2);}
+  .nav-links.open a{font-size:15px;padding:.4rem 0;}
+  .hamburger{display:block;}
+  #hero{grid-template-columns:1fr;padding:2rem 1.5rem;padding-top:88px;min-height:auto;background:var(--ink);}
+  .hero-right{display:flex;justify-content:center;align-items:center;margin-bottom:1.5rem;order:-1;}
+  .symbol-wrap{width:180px;height:180px;}
+  .hero-glow{width:260px;height:260px;}
+  .orbit{inset:-16px;}
+  .orbit-dot{width:7px;height:7px;margin-left:-3.5px;top:-3.5px;}
+  .hero-left{padding-right:0;}
+  h1.hero-h1{font-size:3.2rem;color:var(--cream);}
+  .hero-desc{color:rgba(244,239,227,.65);}
+  .hero-tagline{color:var(--gold);}
+  section{padding:4rem 1.5rem;}
+  .srv-head,.kontakt-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .srv-grid{grid-template-columns:1fr !important;}
+  .pkg-grid{grid-template-columns:1fr;}
+  .menu-cols{grid-template-columns:1fr;}
+  .faq-grid{grid-template-columns:1fr;}
+  .ref-grid{grid-template-columns:1fr;}
+  .m-panel.active{grid-template-columns:1fr;}
+  .f-row{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1rem;padding:2rem 1.5rem;}
+  .barman-box{grid-template-columns:1fr;}
+  .barman-price-wrap{flex-direction:column;align-items:flex-start;gap:1rem;}
+  .barman-price-divider{width:50px;height:1px;}
+  .service-fee-box{flex-direction:column;align-items:flex-start;gap:1.5rem;}
+  .fee-divider{width:50px;height:1px;}
+}
+</style>
+</head>
+<body>
+
+<div id="navbar">
+  <a href="#hero" class="nav-logo">
+    <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154 C95 154,106 126,106 80 C106 34,95 6,80 6 Z" fill="#3a7a78" stroke="#3a7a78" stroke-width="2" transform="translate(-6,0) scale(-1,1) translate(-160,0)"/>
+      <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154" fill="none" stroke="#8ab5b3" stroke-width="1.5" transform="translate(6,0)"/>
+      <path d="M80 154 C95 154,106 126,106 80 C106 34,95 6,80 6" fill="none" stroke="#c8a15a" stroke-width="1.5" transform="translate(6,0)"/>
+    </svg>
+    <div class="nav-wordmark"><b>COCO</b><small>COMPANY</small></div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#sluzby">Služby</a></li>
+    <li><a href="#ceny">Cenník</a></li>
+    <li><a href="#referencie">Referencie</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#kontakt">Kontakt</a></li>
+  </ul>
+  <a href="#kontakt" class="nav-cta">Rezervovať termín</a>
+  <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</div>
+
+<div id="infobar">
+  <span class="infobar-desktop">Celý východ Slovenska & ešte ďalej</span>
+  <span class="infobar-pulse infobar-desktop"></span>
+  <span class="infobar-desktop">Mobilný bar</span>
+  <span class="infobar-pulse infobar-desktop"></span>
+  <span class="infobar-desktop">Coffee & Cocktail Catering</span>
+  <span class="infobar-pulse infobar-desktop"></span>
+  <span class="infobar-desktop">Svadby &nbsp;&amp;&nbsp; Firemné akcie &nbsp;&amp;&nbsp; Súkromné eventy</span>
+  <span class="infobar-mobile">Celý východ Slovenska & ešte ďalej</span>
+  <span class="infobar-pulse infobar-mobile"></span>
+  <span class="infobar-mobile">Mobilný bar</span>
+  <span class="infobar-pulse infobar-mobile"></span>
+  <span class="infobar-mobile">Coffee & Cocktail Catering</span>
+  <span class="infobar-pulse infobar-mobile"></span>
+  <span class="infobar-mobile">Svadby &nbsp;&amp;&nbsp; Firemné akcie &nbsp;&amp;&nbsp; Eventy</span>
+</div>
+
+<section id="hero">
+  <div class="hero-left">
+    <h1 class="hero-h1">COCO<br><span>Company</span></h1>
+    <p class="hero-tagline">Spájame skvelé chute s vašimi výnimočnými zážitkami.</p>
+    <p class="hero-desc">Prinášame prémiový coffee a cocktail catering priamo na vašu akciu. Profesionálny barista a barman pre svadby, firemné akcie i súkromné eventy.</p>
+    <div class="hero-services">
+      <span class="htag">Coffee Catering</span>
+      <span class="htag">Cocktail Catering</span>
+    </div>
+    <div class="cta-row">
+      <a href="#kontakt" class="btn-gold">Rezervovať termín</a>
+      <a href="#ceny" class="btn-ghost">Pozrieť ceny</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-glow"></div>
+    <div class="symbol-wrap">
+      <div class="orbit"><div class="orbit-dot"></div></div>
+      <svg class="sym" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+        <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154 C95 154,106 126,106 80 C106 34,95 6,80 6 Z" fill="#3a7a78" stroke="#3a7a78" stroke-width="1.5" transform="translate(-6,0) scale(-1,1) translate(-160,0)"/>
+        <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154" fill="none" stroke="#8ab5b3" stroke-width="1.5" transform="translate(6,0)"/>
+        <path d="M80 154 C95 154,106 126,106 80 C106 34,95 6,80 6" fill="none" stroke="#c8a15a" stroke-width="1.5" transform="translate(6,0)"/>
+      </svg>
+    </div>
+    </div>
+  </div>
+  <div class="scroll-cue">scroll</div>
+</section>
+
+<section id="sluzby">
+  <div class="srv-head">
+    <div>
+      <p class="s-label">Čo ponúkame</p>
+      <h2 class="s-h2">Naše <em>Služby</em></h2>
+    </div>
+    <p class="s-sub">Každá akcia je pre nás jedinečná. Prinášame profesionálny prístup, prémiové suroviny a zážitok, na ktorý vaši hostia nezabudnú.</p>
+  </div>
+  <div class="srv-grid" style="grid-template-columns:repeat(3,1fr);">
+    <div class="srv-card srv-card--teal">
+      <div class="srv-ico"><svg viewBox="0 0 48 48"><path d="M4 6 L44 6 L26 32"/><line x1="26" y1="32" x2="26" y2="44"/><line x1="14" y1="44" x2="38" y2="44"/><path d="M12 22 L38 22 L26 32 Z" fill="rgba(200,161,90,.2)" stroke="none"/><line x1="40" y1="6" x2="48" y2="-2"/><circle cx="49" cy="-3" r="3" fill="none"/></svg></div>
+      <p class="srv-tag">Cocktail Catering</p>
+      <h3 class="srv-name">Koktailový Bar</h3>
+      <p class="srv-desc" style="color:rgba(244,239,227,.75);">Mobilný koktailový catering s profesionálnym barmanom. Klasika, signature drinky aj mocktaily — doručíme celý bar priamo na vašu akciu.</p>
+      <ul class="srv-list">
+        <li style="color:rgba(244,239,227,.8);">Klasické koktaily & signature drinky</li>
+        <li style="color:rgba(244,239,227,.8);">Bezalkoholické mocktaily</li>
+        <li style="color:rgba(244,239,227,.8);">Personalizované menu na akciu</li>
+        <li style="color:rgba(244,239,227,.8);">Full open bar alebo limitovaný výber</li>
+        <li style="color:rgba(244,239,227,.8);">Prenosný barový pult</li>
+        <li style="color:rgba(244,239,227,.8);">Svadby, firemné akcie, súkromné eventy</li>
+      </ul>
+    </div>
+    <div class="srv-card">
+      <div class="srv-ico"><svg viewBox="0 0 48 48"><path d="M8 16 L10 42 Q10 44 14 44 L34 44 Q38 44 38 42 L40 16 Z"/><path d="M40 20 Q48 20 48 28 Q48 36 40 36"/><line x1="8" y1="22" x2="40" y2="22"/><path d="M16 8 Q14 4 16 0"/><path d="M24 8 Q22 4 24 0"/><path d="M32 8 Q30 4 32 0"/></svg></div>
+      <p class="srv-tag">Coffee Catering</p>
+      <h3 class="srv-name">Barista Servis</h3>
+      <p class="srv-desc">Profesionálny mobilný barista priamo na vašej akcii. Prinášame kompletný coffee catering — od espresso baru až po filter kávu. Každý šálok s láskou a charakterom.</p>
+      <ul class="srv-list">
+        <li>Mobilný espresso bar</li>
+        <li>Espresso, lungo, cappuccino, latte</li>
+        <li>Filter coffee & Irish coffee</li>
+        <li>Sirupy a alternatívne mlieka</li>
+        <li>Latte art na objednávku</li>
+        <li>Coffee break balíky pre konferencie</li>
+      </ul>
+    </div>
+    <div class="srv-card srv-card--teal">
+      <div class="srv-ico"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="20" y="2" width="8" height="7" rx="1"/><path d="M20 9 L20 16 Q12 20 12 30 L12 42 Q12 45 24 45 Q36 45 36 42 L36 30 Q36 20 28 16 L28 9"/><rect x="16" y="26" width="16" height="12" rx="1" stroke-width="1" opacity="0.4"/></svg></div>
+      <p class="srv-tag">Zážitkový Program</p>
+      <h3 class="srv-name">Riadené degustácie</h3>
+      <p class="srv-desc" style="color:rgba(244,239,227,.75);">Nie je to len degustácia — je to zážitok. Prevedieme vašich hostí históriou, výrobou a zaujímavosťami vybraného destilátu. Záver patrí signature koktailu z degustovaného destilátu.</p>
+      <ul class="srv-list">
+        <li style="color:rgba(244,239,227,.8);">6 vzoriek prémiového destilátu</li>
+        <li style="color:rgba(244,239,227,.8);">Odborný výklad s históriou a výrobou</li>
+        <li style="color:rgba(244,239,227,.8);">1 signature koktail na záver</li>
+        <li style="color:rgba(244,239,227,.8);">Whisky, Rum, Gin, Tequila a viac</li>
+        <li style="color:rgba(244,239,227,.8);">Ideálne pre firemné večierky a konferencie</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<section id="ceny">
+  <p class="s-label">Transparentné ceny</p>
+  <h2 class="s-h2">Cenník <em>Služieb</em></h2>
+  <p class="s-sub" style="margin-top:1.4rem;margin-bottom:1.4rem;">Žiadne prekvapenia, len čistý zážitok — presne taký, aký ste si vybrali.</p>
+
+  <p class="price-section-title">🍸 Koktaily — Nápojový lístok</p>
+  <p class="pkg-brand-note" style="margin-bottom:1.5rem;">✦ Tento zoznam koktailov berte skôr ako inšpiráciu než finálnu ponuku. Výber drinkov, ich množstvo aj načasovanie radi prispôsobíme vašim predstavám. Ozvite sa nám a spolu vytvoríme ponuku presne podľa vašich potrieb a predstáv.</p>
+  <div class="menu-cols" style="grid-template-columns:1fr 1fr;">
+    <div class="menu-col teal">
+      <p class="menu-col-title">Alkoholické koktaily · 6.50€ <span style="font-weight:400;opacity:.5;letter-spacing:1px;">bez DPH</span></p>
+      <div class="menu-row"><div><p class="menu-item-name">Cuban Mojito</p><p class="menu-item-sub">Rum · Cukor · Limeta · Mäta</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Passion-Fruit Paloma</p><p class="menu-item-sub">Tequila · Marakuja · Citrón · Grep · Sóda</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Rum Manhattan</p><p class="menu-item-sub">Rum · Vermut · Bitters</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Coconut Wine Spritz</p><p class="menu-item-sub">Biele víno · Kokos · Vanilka · Prosecco</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Whiskey Sour</p><p class="menu-item-sub">Whiskey · Cukor · Citrón</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">High Society</p><p class="menu-item-sub">Gin · Campari · Broskyňa · Grep</p></div></div>
+    </div>
+    <div class="menu-col">
+      <p class="menu-col-title">Mocktails · 4.50€ <span style="font-weight:400;opacity:.5;letter-spacing:1px;">bez DPH</span></p>
+      <div class="menu-row"><div><p class="menu-item-name">Mango-Mint Lemonade</p><p class="menu-item-sub">Mango · Mäta · Citrón · Sóda</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Strawberry Mule</p><p class="menu-item-sub">Jahoda · Zázvor · Citrón · Ginger Beer</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Lavender Soda Spritz</p><p class="menu-item-sub">Levanduľa · Citrón · Sóda · Tonic</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Rosemary Rouge</p><p class="menu-item-sub">Grep · Malina · Rozmarín · Sóda</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Garden Zen</p><p class="menu-item-sub">Uhorka · Limetka · Bazalka · Sóda</p></div></div>
+      <div class="menu-row"><div><p class="menu-item-name">Golden Shore</p><p class="menu-item-sub">Ananás · Passion Fruit · Limetka · Sóda</p></div></div>
+    </div>
+  </div>
+
+  <p class="price-section-title" style="margin-top:3rem;">☕ Káva — Barista balíky</p>
+  <p class="pkg-brand-note" style="margin-bottom:1.5rem;">✦ Používame vlastný blend pražený špeciálne pre COCO Company slovenskou pražiarňou. Pretože skvelé chute začínajú dávno pred prvým dúškom.</p>
+  <p style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:1rem;">Všetky ceny sú uvedené bez DPH</p>
+  <div class="pkg-grid">
+    <div class="pkg-card">
+      <p class="pkg-name">Basic</p>
+      <p class="pkg-price">2<sup>.50€</sup> <span class="pkg-pp">/ os.</span></p>
+      <p class="pkg-price-note">Klasická dvojica</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-items">
+        <li>Espresso</li>
+        <li>Espresso Lungo</li>
+      </ul>
+    </div>
+    <div class="pkg-card featured">
+      <p class="pkg-badge">Najpopulárnejší</p>
+      <p class="pkg-name">Standard</p>
+      <p class="pkg-price">3<sup>.00€</sup> <span class="pkg-pp">/ os.</span></p>
+      <p class="pkg-price-note">Káva pre každý vkus</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-items">
+        <li>Espresso, Lungo</li>
+        <li>Cappuccino, Caffè Latte</li>
+      </ul>
+    </div>
+    <div class="pkg-card">
+      <p class="pkg-name">Premium</p>
+      <p class="pkg-price">4<sup>.50€</sup> <span class="pkg-pp">/ os.</span></p>
+      <p class="pkg-price-note">Kompletný barista zážitok</p>
+      <div class="pkg-divider"></div>
+      <ul class="pkg-items">
+        <li>Espresso, Lungo, Cappuccino</li>
+        <li>Caffè Latte, Filter, Irish Coffee</li>
+        <li>+2 prémiové sirupy</li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="price-section-title">⏱ Service Fee</p>
+  <p style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:1rem;font-family:'Space Grotesk',sans-serif;">Ceny bez DPH · Platí pri zabezpečení alkoholu a ingrediencií z našej strany</p>
+  <div class="service-fee-box" style="background:var(--teal);">
+    <div class="fee-item fee-hoverable">
+      <p class="fee-label" style="color:rgba(244,239,227,.6);">Service Fee</p>
+      <p class="fee-price" style="font-size:3rem;letter-spacing:-2px;">250€</p>
+      <p class="fee-note">6 hodín · do 00:00</p>
+    </div>
+    <div class="fee-divider"></div>
+    <div class="fee-item fee-hoverable">
+      <p class="fee-label">Extra čas</p>
+      <p class="fee-price" style="font-size:1.8rem;">35€</p>
+      <p class="fee-note">každých 30 min po 00:00</p>
+    </div>
+    <div class="fee-divider"></div>
+    <div class="fee-item fee-hoverable" style="flex:1;">
+      <p class="fee-label">Čo je zahrnuté</p>
+      <p style="font-size:14px;color:rgba(244,239,227,.7);font-weight:400;line-height:1.8;">Prenájom baru · barový inventár · ľad · profesionálny barman / barista · konzultácia menu pred akciou</p>
+    </div>
+  </div>
+
+  <p style="font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(15,15,15,.4);margin-bottom:1rem;font-family:'Space Grotesk',sans-serif;">Ceny bez DPH · Klient zabezpečuje alkohol a ingrediencie</p>
+  <div class="barman-box" style="background:var(--ink2);border:1px solid rgba(200,161,90,.2);position:relative;overflow:hidden;">
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;" class="barman-gold-bar"></div>
+    <div class="barman-box-left">
+      <h3>Prenájom BARU a BARMANA</h3>
+      <p>Náš bar a barman, váš alkohol. Vy si vyberiete čo sa bude piť — my sa postaráme o zvyšok. Ideálne pre akcie s približne 80 hostami.</p>
+      <ul class="barman-box-list">
+        <li>Ideálne pre hotely, eventové agentúry a súkromných organizátorov</li>
+        <li>Možnosť využitia vlastného alkoholu</li>
+        <li>Flexibilný čas a miesto</li>
+        <li>Profesionálny servis a skúsenosti</li>
+      </ul>
+    </div>
+    <div class="barman-price-wrap">
+      <div class="barman-price-item">
+        <p class="barman-price-label">Prenájom</p>
+        <p class="barman-price">400€</p>
+        <p class="barman-price-label">6 hodín · do 00:00</p>
+      </div>
+      <div class="barman-price-divider"></div>
+      <div class="barman-price-item">
+        <p class="barman-price-label">Extra čas</p>
+        <p class="barman-price" style="font-size:1.8rem;">45€</p>
+        <p class="barman-price-label">každých 30 min po 00:00</p>
+      </div>
+    </div>
+  </div>
+
+  <p class="price-section-title">🥃 Riadené degustácie</p>
+  <div style="background:var(--teal);border-radius:12px;overflow:hidden;margin-top:16px;position:relative;transition:transform .25s;cursor:default;" onmouseover="this.style.transform='scale(1.01)'" onmouseout="this.style.transform='scale(1)'">
+    <div style="padding:3rem 3rem 2rem;border-bottom:1px solid rgba(244,239,227,.1);">
+      <p style="font-family:'Space Grotesk',sans-serif;font-style:normal;font-weight:700;font-size:1.6rem;color:var(--cream);line-height:1.3;max-width:680px;margin-bottom:.8rem;letter-spacing:-.3px;">Nie je to len degustácia — je to zážitok, ktorý vaši hostia budú rozprávať ešte dlho po akcii.</p>
+      <p style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Skvelé obzvláštenie firemného večierka, konferencie alebo teambuildingu</p>
+    </div>
+    <div style="padding:2rem 3rem;display:flex;gap:4rem;align-items:center;flex-wrap:wrap;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Cena za výklad</p>
+        <p style="font-size:3rem;font-weight:700;color:var(--gold);letter-spacing:-2px;line-height:1;">200€</p>
+        <p style="font-size:13px;color:rgba(244,239,227,.4);">bez DPH</p>
+      </div>
+      <div style="width:1px;height:50px;background:rgba(244,239,227,.2);align-self:center;"></div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Fľaše</p>
+        <p style="font-size:1.8rem;font-weight:700;color:var(--gold);letter-spacing:-1px;line-height:1;">+ cena</p>
+        <p style="font-size:13px;color:rgba(244,239,227,.4);">podľa výberu destilátu</p>
+      </div>
+      <div style="width:1px;height:50px;background:rgba(244,239,227,.2);align-self:center;"></div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
+        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Čo je zahrnuté</p>
+        <p style="font-size:14px;color:rgba(244,239,227,.85);font-weight:400;line-height:1.8;">6 vzoriek destilátu · odborný výklad · história a výroba · 1 signature koktail · degustačné poháre</p>
+        <p style="font-size:13px;color:rgba(244,239,227,.5);font-weight:400;">Whisky · Rum · Gin · Tequila · Vodka · Cognac · Armagnac · Ovocné destiláty · a viac</p>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);"></div>
+  </div>
+
+  <!-- Fotky z akcií — nekonečný karusel -->
+  <!-- =============================================
+       KARUSEL: pridaj/odober fotky len tu:
+       ============================================= -->
+  <p class="price-section-title" style="margin-top:3rem;">📸 Fotky z akcií</p>
+  <div id="carousel" style="position:relative;border-radius:12px;overflow:hidden;margin-top:16px;background:#111;user-select:none;">
+    <div id="carousel-track" style="display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform;"></div>
+    <!-- šípky -->
+    <button onclick="carouselMove(-1)" style="position:absolute;left:16px;top:50%;transform:translateY(-50%);background:rgba(15,15,15,.7);border:1px solid rgba(200,161,90,.4);color:var(--cream);width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(200,161,90,.3)'" onmouseout="this.style.background='rgba(15,15,15,.7)'">‹</button>
+    <button onclick="carouselMove(1)"  style="position:absolute;right:16px;top:50%;transform:translateY(-50%);background:rgba(15,15,15,.7);border:1px solid rgba(200,161,90,.4);color:var(--cream);width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;transition:background .2s;" onmouseover="this.style.background='rgba(200,161,90,.3)'" onmouseout="this.style.background='rgba(15,15,15,.7)'">›</button>
+    <!-- bodky -->
+    <div id="carousel-dots" style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:10;"></div>
+  </div>
+
+  <script>
+  (function(){
+    // =============================================
+    // ZMEŇ FOTKY TU — pridaj/odober riadky podľa potreby
+    // =============================================
+    var photos = [
+      { src: 'images/1.jpg', alt: 'Akcia 1' },
+      { src: 'images/2.jpg', alt: 'Akcia 2' },
+      { src: 'images/3.jpg', alt: 'Akcia 3' },
+      { src: 'images/4.jpg', alt: 'Akcia 4' },
+      { src: 'images/5.jpg', alt: 'Akcia 5' },
+      { src: 'images/6.jpg', alt: 'Akcia 6' },
+    ];
+    // =============================================
+
+    var track = document.getElementById('carousel-track');
+    var dotsEl = document.getElementById('carousel-dots');
+    var current = 0;
+    var total = photos.length;
+    var autoTimer;
+
+    // naklonovanie pre nekonečný efekt: [posledná, ...originály, prvá]
+    var extended = [photos[total-1]].concat(photos).concat([photos[0]]);
+
+    extended.forEach(function(p){
+      var slide = document.createElement('div');
+      slide.style.cssText = 'flex:0 0 100%;width:100%;';
+      var img = document.createElement('img');
+      img.src = p.src;
+      img.alt = p.alt;
+      img.style.cssText = 'width:100%;max-height:600px;height:auto;object-fit:contain;display:block;background:#111;';
+      slide.appendChild(img);
+      track.appendChild(slide);
+    });
+
+    // bodky
+    photos.forEach(function(_, i){
+      var d = document.createElement('div');
+      d.style.cssText = 'width:8px;height:8px;border-radius:50%;background:rgba(244,239,227,.35);cursor:pointer;transition:background .2s;';
+      d.onclick = function(){ goTo(i); };
+      dotsEl.appendChild(d);
+    });
+
+    function updateDots(){
+      var dots = dotsEl.children;
+      for(var i=0;i<dots.length;i++){
+        dots[i].style.background = i===current ? 'var(--gold)' : 'rgba(244,239,227,.35)';
+        dots[i].style.transform = i===current ? 'scale(1.3)' : 'scale(1)';
+      }
+    }
+
+    function setPos(idx, animate){
+      track.style.transition = animate===false ? 'none' : 'transform .5s cubic-bezier(.4,0,.2,1)';
+      track.style.transform = 'translateX(-'+(idx+1)*100+'%)';
+    }
+
+    function goTo(idx){
+      current = ((idx % total) + total) % total;
+      setPos(current, true);
+      updateDots();
+      resetAuto();
+    }
+
+    window.carouselMove = function(dir){
+      goTo(current + dir);
+    };
+
+    // po transition — ak sme na klone, preskočíme bez animácie
+    track.addEventListener('transitionend', function(){
+      if(current === 0){
+        setPos(0, false);
+      } else if(current === total-1){
+        setPos(total-1, false);
+      }
+    });
+
+    function resetAuto(){
+      clearInterval(autoTimer);
+      autoTimer = setInterval(function(){ goTo(current+1); }, 4000);
+    }
+
+    // init
+    setPos(0, false);
+    updateDots();
+    resetAuto();
+
+    // swipe na mobile
+    var startX=0;
+    track.addEventListener('touchstart',function(e){startX=e.touches[0].clientX;},{passive:true});
+    track.addEventListener('touchend',function(e){
+      var dx=e.changedTouches[0].clientX-startX;
+      if(Math.abs(dx)>40) goTo(current+(dx<0?1:-1));
+    },{passive:true});
+  })();
+  </script>
+</section>
+
+<div class="gold-divider"></div>
+
+<section id="referencie">
+  <p class="s-label">Čo o nás hovoria</p>
+  <h2 class="s-h2">Spokojní <em>Klienti</em></h2>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <p class="ref-stars">★★★★★</p>
+      <p class="ref-text">"COCO Company urobili našu svadbu nezabudnuteľnou. Hostia hovorili o koktailoch celý večer — každý drink bol dokonalý."</p>
+      <p class="ref-author">Katarína & Marek</p>
+      <p class="ref-type">Svadba · Prešov</p>
+    </div>
+    <div class="ref-card">
+      <p class="ref-stars">★★★★★</p>
+      <p class="ref-text">"Firemný teambuilding na inej úrovni. Barista servis bol profesionálny, káva vynikajúca a celý tím bol nadšený."</p>
+      <p class="ref-author">Martin K.</p>
+      <p class="ref-type">Firemná akcia · 80 hostí</p>
+    </div>
+    <div class="ref-card">
+      <p class="ref-stars">★★★★★</p>
+      <p class="ref-text">"Oslava 30-tky o ktorej všetci stále hovoria. Mobilný bar vyzerá skvele, barmani sú perfektní a drinky... wow."</p>
+      <p class="ref-author">Lucia T.</p>
+      <p class="ref-type">Súkromná párty · Košice</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<section id="faq">
+  <p class="s-label">Časté otázky</p>
+  <h2 class="s-h2">Všetko čo <em>potrebujete vedieť</em></h2>
+  <div class="faq-grid">
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Kde všade prichádzate? <span>+</span></p>
+      <p class="faq-a">Pôsobíme predovšetkým v Prešove a okolí. Radi prídeme aj do iných miest na Slovensku — kontaktujte nás pre cenovú ponuku vrátane dopravy.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Koľko miesta potrebuje mobilný bar? <span>+</span></p>
+      <p class="faq-a">Náš mobilný bar je kompaktný a sebestačný. Vystačí si s priestorom cca 6 m². Dokážeme sa prispôsobiť reštaurácii, záhrade, firemným priestorom aj otvorenej lúke.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Čo všetko si prinesiete so sebou? <span>+</span></p>
+      <p class="faq-a">Barman/barista si prinesie všetky nástroje, ingrediencie, ľad, sklenené poháre, eko slamky aj vodu na umývanie. Nemusíte sa starať o nič — prídeme a zariadime.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Môžeme mať vlastný alkohol? <span>+</span></p>
+      <p class="faq-a">Áno! Ak máte vlastný alkohol alebo preferujete konkrétne značky, môžeme ho použiť. Alebo môžete zvoliť službu "prenájom barmana" kde prinesiete vlastné vybavenie.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Ako prebieha rezervácia? <span>+</span></p>
+      <p class="faq-a">Vyplňte kontaktný formulár alebo nám napíšte. Do 24 hodín vás kontaktujeme, prekonzultujeme detaily vašej akcie a zašleme presnú cenovú ponuku na mieru.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Kedy prídete rozložiť bar? <span>+</span></p>
+      <p class="faq-a">Spravidla prichádzame 30–45 minút pred začatím akcie, aby bol bar plne pripravený pred príchodom hostí. Presný čas doladíme podľa vašich požiadaviek.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Robíte aj bezalkoholické drinky? <span>+</span></p>
+      <p class="faq-a">Samozrejme! Naše mocktaily sú rovnako premyslené a chutné ako alkoholické koktaily. Dbáme na to, aby si každý hosť — bez ohľadu na preferencie — vychutnal niečo špeciálne.</p>
+    </div>
+    <div class="faq-item" onclick="toggleFaq(this)">
+      <p class="faq-q">Je možné si objednať len barmana bez baru? <span>+</span></p>
+      <p class="faq-a">Áno, ponúkame aj samostatnú službu prenájmu barmana. Ideálne pre hotely, eventové agentúry alebo klientov, ktorí majú vlastné vybavenie.</p>
+    </div>
+  </div>
+</section>
+
+<div class="gold-divider"></div>
+
+<section id="kontakt">
+  <div class="kontakt-grid">
+    <div class="kontakt-info">
+      <p class="s-label">Kontakt</p>
+      <h2 class="s-h2">Rezervujte si <em>termín</em></h2>
+      <p>Radi vám pomôžeme naplánovať vašu akciu. Napíšte nám — odpovieme do 24 hodín s konkrétnou cenovou ponukou.</p>
+      <div class="ci-list">
+        <div class="ci">
+          <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div><p class="ci-label">Email</p><p class="ci-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="50333833353d333f333f10373d31393c7e333f3d">[email&#160;protected]</a></p></div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.03 1.17 2 2 0 012 .01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
+          <div><p class="ci-label">Telefón</p><p class="ci-val">+421 914 176 717</p><p class="ci-val">+421 948 306 092</p></div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#c8a15a" stroke="none"/></svg></div>
+          <div><p class="ci-label">Instagram</p><p class="ci-val">@coco_company_official</p></div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></div>
+          <div><p class="ci-label">Facebook</p><p class="ci-val">COCO Company</p></div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" id="contactForm">
+      <!-- honeypot against spam -->
+      <input type="text" name="_gotcha" style="display:none"/>
+      <input type="hidden" name="_language" value="sk"/>
+      <input type="hidden" name="_subject" value="Nový dopyt — COCO Company"/>
+      <div class="f-row">
+        <div class="f-group"><label class="f-label">Meno a priezvisko</label><input type="text" name="meno" class="f-input" placeholder="Ján Novák" required/></div>
+        <div class="f-group"><label class="f-label">Email</label><input type="email" name="email" class="f-input" placeholder="jan@firma.sk" required/></div>
+      </div>
+      <div class="f-row">
+        <div class="f-group"><label class="f-label">Telefón</label><input type="tel" name="telefon" class="f-input" placeholder="+421 900 000 000"/></div>
+        <div class="f-group"><label class="f-label">Dátum akcie</label><input type="date" name="datum" class="f-input"/></div>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Typ akcie</label>
+        <select name="typ_akcie" class="f-input">
+          <option value="">Vybrať...</option>
+          <option>Svadba</option>
+          <option>Firemná akcia</option>
+          <option>Súkromná párty</option>
+          <option>Konferencia / Teambuilding</option>
+          <option>Ples / Gala večer</option>
+          <option>Iné</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Záujem o službu</label>
+        <select name="sluzba" class="f-input">
+          <option value="">Vybrať...</option>
+          <option>Barista servis (káva)</option>
+          <option>Koktailový bar</option>
+          <option>Barista + koktailový bar</option>
+          <option>Prenájom baru a barmana</option>
+          <option>Kombinácia viacerých služieb</option>
+        </select>
+      </div>
+      <div class="f-group"><label class="f-label">Správa</label><textarea name="sprava" class="f-input" placeholder="Počet hostí, miesto konania, ďalšie požiadavky..."></textarea></div>
+      <button type="submit" class="f-submit">Odoslať dopyt</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <p class="f-copy">© 2025 <span>COCO Company</span> · Coffee · Cocktails · Catering · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea8982898f8789858985aa8d878b8386c4898587">[email&#160;protected]</a></p>
+  <svg width="32" height="32" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+    <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154 C95 154,106 126,106 80 C106 34,95 6,80 6 Z" fill="#3a7a78" transform="translate(-6,0) scale(-1,1) translate(-160,0)"/>
+    <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154" fill="none" stroke="#8ab5b3" stroke-width="1.5" transform="translate(6,0)"/>
+    <path d="M80 154 C95 154,106 126,106 80 C106 34,95 6,80 6" fill="none" stroke="#c8a15a" stroke-width="1.5" transform="translate(6,0)"/>
+  </svg>
+  <nav class="f-nav">
+    <a href="#sluzby">Služby</a>
+    <a href="#ceny">Cenník</a>
+    <a href="#referencie">Referencie</a>
+    <a href="#faq">FAQ</a>
+    <a href="#kontakt">Kontakt</a>
+  </nav>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+window.addEventListener('scroll',()=>{
+  const n=document.getElementById('navbar');
+  n.style.height=window.scrollY>60?'52px':'64px';
+
+  // scrollspy
+  const sections=['sluzby','ceny','referencie','faq','kontakt'];
+  const navH=n.offsetHeight;
+  const mid=window.innerHeight/2;
+  let current='';
+  sections.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&el.getBoundingClientRect().top<=mid) current=id;
+  });
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.classList.toggle('active', a.getAttribute('href')==='#'+current);
+  });
+});
+
+function toggleFaq(el){
+  const wasOpen=el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen)el.classList.add('open');
+}
+
+const contactForm=document.getElementById('contactForm');
+if(contactForm){
+  contactForm.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=contactForm.querySelector('button[type="submit"]');
+    btn.textContent='Odosielam...';
+    btn.style.opacity='.6';
+    btn.disabled=true;
+    try{
+      const res=await fetch('https://formspree.io/f/mbdpbnpp',{
+        method:'POST',
+        body:new FormData(contactForm),
+        headers:{Accept:'application/json'}
+      });
+      if(res.ok){
+        btn.textContent='✓ Odoslané!';
+        btn.style.background='#3a7a78';
+        btn.style.opacity='1';
+        contactForm.reset();
+        setTimeout(()=>{
+          btn.textContent='Odoslať dopyt';
+          btn.style.background='';
+          btn.disabled=false;
+        },4000);
+      } else {
+        btn.textContent='Chyba — skúste znova';
+        btn.style.background='#c0392b';
+        btn.style.opacity='1';
+        btn.disabled=false;
+      }
+    } catch(err){
+      btn.textContent='Chyba — skúste znova';
+      btn.style.background='#c0392b';
+      btn.style.opacity='1';
+      btn.disabled=false;
+    }
+  });
+}
+
+const barmanBox=document.querySelector('.barman-box');
+const barmanBar=document.querySelector('.barman-gold-bar');
+if(barmanBox&&barmanBar){
+  barmanBox.addEventListener('mouseenter',()=>barmanBar.style.transform='scaleX(1)');
+  barmanBox.addEventListener('mouseleave',()=>barmanBar.style.transform='scaleX(0)');
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const target=document.querySelector(this.getAttribute('href'));
+    if(!target)return;
+    e.preventDefault();
+    const navH=document.getElementById('navbar').offsetHeight;
+    const infoH=(document.getElementById('infobar')&&window.innerWidth>960)?document.getElementById('infobar').offsetHeight:0;
+    const top=target.getBoundingClientRect().top+window.scrollY-navH-infoH-16;
+    window.scrollTo({top,behavior:'smooth'});
+    document.getElementById('navLinks').classList.remove('open');
+  });
+});
+
+// 3D logo rotation
+const sym=document.querySelector('svg.sym');
+const symWrap=document.querySelector('.symbol-wrap');
+if(sym&&symWrap){
+  let angle=0;
+  function rotateLogo(){
+    angle=(angle+0.3)%360;
+    const rad=angle*Math.PI/180;
+    const absC=Math.abs(Math.cos(rad));
+    sym.style.transform=`rotateY(${angle}deg)`;
+    sym.style.filter=`drop-shadow(0 0 ${15+45*absC}px rgba(58,122,120,${0.1+0.3*absC}))`;
+    requestAnimationFrame(rotateLogo);
+  }
+  rotateLogo();
+}
+</script>
+</body>
+</html>
