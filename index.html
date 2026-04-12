@@ -140,6 +140,10 @@ section{padding:7rem 5rem;}
 .barman-box:hover{transform:scale(1.01);z-index:2;}
 .barman-box::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
 .barman-box:hover::after{transform:scaleX(1);}
+.degust-card{background:var(--teal);border-radius:12px;overflow:hidden;margin-top:16px;position:relative;transition:transform .25s;}
+.degust-card:hover{transform:scale(1.01);z-index:2;}
+.degust-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .35s;}
+.degust-card:hover::after{transform:scaleX(1);}
 .fee-hoverable{padding:1rem 1.5rem;border-radius:6px;cursor:default;}
 
 #ceny{background:var(--cream);color:var(--ink);padding-top:4rem;}
@@ -537,8 +541,8 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
   </div>
 
   <p class="price-section-title">🥃 Riadené degustácie</p>
-  <div style="background:var(--teal);border-radius:12px;overflow:hidden;margin-top:16px;position:relative;transition:transform .25s;cursor:default;" onmouseover="this.style.transform='scale(1.01)'" onmouseout="this.style.transform='scale(1)'">
-    <div style="padding:3rem 3rem 2rem;border-bottom:1px solid rgba(244,239,227,.1);">
+  <div class="degust-card">
+    <div style="padding:3rem 3rem 2rem;">
       <p style="font-family:'Space Grotesk',sans-serif;font-style:normal;font-weight:700;font-size:1.6rem;color:var(--cream);line-height:1.3;max-width:680px;margin-bottom:.8rem;letter-spacing:-.3px;">Nie je to len degustácia — je to zážitok, ktorý vaši hostia budú rozprávať ešte dlho po akcii.</p>
       <p style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Skvelé obzvláštenie firemného večierka, konferencie alebo teambuildingu</p>
     </div>
@@ -561,7 +565,6 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
         <p style="font-size:13px;color:rgba(244,239,227,.5);font-weight:400;">Whisky · Rum · Gin · Tequila · Vodka · Cognac · Armagnac · Ovocné destiláty · a viac</p>
       </div>
     </div>
-    <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--gold);"></div>
   </div>
 
   <!-- Fotky z akcií — nekonečný karusel -->
