@@ -94,7 +94,7 @@ h1.hero-h1 span{color:var(--teal-light);}
 .orbit{position:absolute;inset:-28px;border:1px solid rgba(200,161,90,.18);border-radius:50%;animation:spin 28s linear infinite;}
 .orbit-dot{position:absolute;top:-5px;left:50%;width:10px;height:10px;background:var(--gold);border-radius:50%;margin-left:-5px;box-shadow:0 0 12px rgba(200,161,90,.6);}
 @keyframes spin{to{transform:rotate(360deg);}}
-.scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(244,239,227,.25);}
+.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(244,239,227,.25);margin-top:2rem;}
 .scroll-cue::after{content:'';width:1px;height:36px;background:linear-gradient(to bottom,rgba(200,161,90,.45),transparent);animation:grow 2.2s ease-in-out infinite;}
 @keyframes grow{0%,100%{opacity:.3;}50%{opacity:.9;}}
 
@@ -356,6 +356,7 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
       <a href="#kontakt" class="btn-gold">Rezervovať termín</a>
       <a href="#ceny" class="btn-ghost">Pozrieť ceny</a>
     </div>
+    <div class="scroll-cue">scroll</div>
   </div>
   <div class="hero-right">
     <div class="hero-glow"></div>
@@ -369,7 +370,6 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
     </div>
     </div>
   </div>
-  <div class="scroll-cue">scroll</div>
 </section>
 
 <section id="sluzby">
