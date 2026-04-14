@@ -210,9 +210,9 @@ section{padding:7rem 5rem;}
 .barman-box-list{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:.9rem;}
 .barman-box-list li{font-size:14px;color:rgba(244,239,227,.8);padding-left:.9rem;position:relative;}
 .barman-box-list li::before{content:'—';position:absolute;left:0;color:var(--gold);}
-.barman-price-wrap{display:flex;flex-direction:row;align-items:center;gap:3rem;flex-shrink:0;}
+.barman-price-wrap{display:flex;flex-direction:column;align-items:flex-start;gap:1rem;flex-shrink:0;}
 .barman-price-item{display:flex;flex-direction:column;gap:4px;}
-.barman-price-divider{width:1px;height:50px;background:rgba(244,239,227,.25);align-self:center;}
+.barman-price-divider{width:50px;height:1px;background:rgba(244,239,227,.25);}
 .barman-price{font-size:3rem;font-weight:700;color:var(--gold);letter-spacing:-2px;line-height:1;}
 .barman-price-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.6);margin-top:.3rem;}
 
@@ -528,17 +528,18 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
         <li>Profesionálny servis a skúsenosti</li>
       </ul>
     </div>
-    <div class="barman-price-wrap">
-      <div class="barman-price-item">
-        <p class="barman-price-label">Prenájom</p>
-        <p class="barman-price">400€</p>
-        <p class="barman-price-label">6 hodín · do 00:00</p>
+    <div class="service-fee-box" style="background:transparent;padding:1.5rem 0;margin:0;border-radius:0;border:none;">
+      <div class="fee-divider"></div>
+      <div class="fee-item">
+        <p class="fee-label">Prenájom</p>
+        <p class="fee-price" style="font-size:3rem;letter-spacing:-2px;">400€</p>
+        <p class="fee-note">6 hodín · do 00:00</p>
       </div>
-      <div class="barman-price-divider"></div>
-      <div class="barman-price-item">
-        <p class="barman-price-label">Extra čas</p>
-        <p class="barman-price" style="font-size:1.8rem;">45€</p>
-        <p class="barman-price-label">každých 30 min po 00:00</p>
+      <div class="fee-divider"></div>
+      <div class="fee-item">
+        <p class="fee-label">Extra čas</p>
+        <p class="fee-price" style="font-size:1.8rem;">45€</p>
+        <p class="fee-note">každých 30 min po 00:00</p>
       </div>
     </div>
   </div>
@@ -549,21 +550,21 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
       <p style="font-family:'Space Grotesk',sans-serif;font-style:normal;font-weight:700;font-size:1.6rem;color:var(--cream);line-height:1.3;max-width:680px;margin-bottom:.8rem;letter-spacing:-.3px;">Nie je to len degustácia — je to zážitok, ktorý vaši hostia budú rozprávať ešte dlho po akcii.</p>
       <p style="font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Skvelé obzvláštenie firemného večierka, konferencie alebo teambuildingu</p>
     </div>
-    <div style="padding:2rem 3rem;display:flex;gap:4rem;align-items:center;flex-wrap:wrap;">
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Cena za výklad</p>
-        <p style="font-size:3rem;font-weight:700;color:var(--gold);letter-spacing:-2px;line-height:1;">200€</p>
-        <p style="font-size:13px;color:rgba(244,239,227,.4);">bez DPH</p>
+    <div class="service-fee-box" style="background:transparent;padding:1.5rem 3rem;margin:0;border-radius:0;border:none;">
+      <div class="fee-item">
+        <p class="fee-label">Cena za výklad</p>
+        <p class="fee-price" style="font-size:3rem;letter-spacing:-2px;">200€</p>
+        <p class="fee-note">bez DPH</p>
       </div>
-      <div style="width:1px;height:50px;background:rgba(244,239,227,.2);align-self:center;"></div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Fľaše</p>
-        <p style="font-size:1.8rem;font-weight:700;color:var(--gold);letter-spacing:-1px;line-height:1;">+ cena</p>
-        <p style="font-size:13px;color:rgba(244,239,227,.4);">podľa výberu destilátu</p>
+      <div class="fee-divider"></div>
+      <div class="fee-item">
+        <p class="fee-label">Fľaše</p>
+        <p class="fee-price" style="font-size:1.8rem;">+ cena</p>
+        <p class="fee-note">podľa výberu destilátu</p>
       </div>
-      <div style="width:1px;height:50px;background:rgba(244,239,227,.2);align-self:center;"></div>
-      <div style="flex:1;display:flex;flex-direction:column;gap:8px;">
-        <p style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(244,239,227,.5);">Čo je zahrnuté</p>
+      <div class="fee-divider"></div>
+      <div class="fee-item" style="flex:1;">
+        <p class="fee-label">Čo je zahrnuté</p>
         <p style="font-size:14px;color:rgba(244,239,227,.85);font-weight:400;line-height:1.8;">6 vzoriek destilátu · odborný výklad · história a výroba · 1 signature koktail · degustačné poháre</p>
         <p style="font-size:13px;color:rgba(244,239,227,.5);font-weight:400;">Whisky · Rum · Gin · Tequila · Vodka · Cognac · Armagnac · Ovocné destiláty · a viac</p>
       </div>
@@ -799,9 +800,9 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
           <option value="">Vybrať...</option>
           <option>Barista servis (káva)</option>
           <option>Koktailový bar</option>
-          <option>Barista + koktailový bar</option>
+          <option>Barista servis + koktailový bar</option>
+          <option>Riadená degustácia</option>
           <option>Prenájom baru a barmana</option>
-          <option>Kombinácia viacerých služieb</option>
         </select>
       </div>
       <div class="f-group"><label class="f-label">Správa</label><textarea name="sprava" class="f-input" placeholder="Počet hostí, miesto konania, ďalšie požiadavky..."></textarea></div>
