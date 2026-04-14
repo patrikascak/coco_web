@@ -761,7 +761,7 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
       <div class="ci-list">
         <div class="ci">
           <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><p class="ci-label">Email</p><p class="ci-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="50333833353d333f333f10373d31393c7e333f3d">[email&#160;protected]</a></p></div>
+          <div><p class="ci-label">Email</p><p class="ci-val"><a id="email-link" href="#" style="color:var(--teal-light);">načítava...</a></p></div>
         </div>
         <div class="ci">
           <div class="ci-ico"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.03 1.17 2 2 0 012 .01h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg></div>
@@ -820,7 +820,7 @@ footer{background:#060606;padding:2.5rem 5rem;display:flex;align-items:center;ju
 </section>
 
 <footer>
-  <p class="f-copy">© 2025 <span>COCO Company</span> · Coffee · Cocktails · Catering · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ea8982898f8789858985aa8d878b8386c4898587">[email&#160;protected]</a></p>
+  <p class="f-copy">© 2025 <span>COCO Company</span> · Coffee · Cocktails · Catering · <a id="footer-email" href="#" style="color:var(--teal-light);">načítava...</a></p>
   <svg width="32" height="32" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
     <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154 C95 154,106 126,106 80 C106 34,95 6,80 6 Z" fill="#3a7a78" transform="translate(-6,0) scale(-1,1) translate(-160,0)"/>
     <path d="M80 6 C118 6,148 38,148 80 C148 122,118 154,80 154" fill="none" stroke="#8ab5b3" stroke-width="1.5" transform="translate(6,0)"/>
@@ -853,6 +853,14 @@ window.addEventListener('scroll',()=>{
     a.classList.toggle('active', a.getAttribute('href')==='#'+current);
   });
 });
+
+// Email ochrana pred spamom
+(function(){
+  var u='info',d='cococompany',t='sk';
+  var e=u+'@'+d+'.'+t;
+  var els=[document.getElementById('email-link'),document.getElementById('footer-email')];
+  els.forEach(function(el){if(el){el.href='mailto:'+e;el.textContent=e;}});
+})();
 
 function toggleFaq(el){
   const wasOpen=el.classList.contains('open');
